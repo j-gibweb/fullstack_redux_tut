@@ -1,39 +1,30 @@
 import React from 'react/addons';
+import {connect} from 'react-redux';
+import {WinnerContainer} from './Winner';
+import {TallyContainer} from './Tally';
 
-export default React.createClass({
-  // mixins: [React.addons.PureRenderMixin],
-  getPair: function() {
-    return this.props.pair || [];
-  },
-  getVotes: function(entry) {
-    if (this.props.tally && this.props.tally.has(entry)) {
-      return this.props.tally.get(entry);
-    } else {
-      return 0;
-    }
-  },
+export const Results = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
   render: function() {
-    
-    let entries = this.getPair().map((entry) => {
-      return (
-        <div key={entry} className="entry">
-          <h1>{entry}</h1>
-          <div className="voteCount">
-            {this.getVotes(entry)}
-          </div>
-        </div>
-      );
-    });
-
-    return (
+    return this.props.winner ? <WinnerContainer ref="winner" winner={this.props.winner} /> : (
       <div className="results">
-        <div className="tally">
-          {entries}
-        </div>
+        <TallyContainer pair={this.props.pair} tally={this.props.tally} />
         <div className="management">
-          <button ref="next" className="next" onClick={() => {this.props.next()}}>Next</button>
+          <button ref="next" 
+                  className="next" 
+                  onClick={this.props.next}>
+            Next
+          </button>
         </div>
       </div>
     );
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    winner: state.get('winner')
+  }
+}
+
+export const ResultsContainer = connect(mapStateToProps)(Results);
