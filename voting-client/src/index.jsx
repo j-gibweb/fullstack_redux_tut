@@ -3,27 +3,20 @@ import Router, {Route, DefaultRoute} from 'react-router';
 import {createStore} from 'redux';
 import reducer from './reducer';
 import {Provider} from 'react-redux';
+import io from 'socket.io-client';
+
+import {setState} from './action_creators';
 import App from './components/App';
 import {VotingContainer} from './components/Voting';
 import {ResultsContainer} from './components/Results';
 
 const store = createStore(reducer);
-store.dispatch({
-  type: 'SET_STATE',
-  state: {
-    vote: {
-      pair: ['Sunshine', '28 Days Later'],
-      tally: {Sunshine: 2}
-    }
-  }
-})
 
-// store.dispatch({
-//   type: 'SET_STATE',
-//   state: {
-//     winner: 'Trainspotting'
-//   }
-// })
+
+const socket = io(`${location.protocol}//${location.hostname}:8090`)
+socket.on('state', (state) => {
+  store.dispatch(setState(state));
+});
 
 
 const routes = <Route handler={App}>
@@ -39,6 +32,33 @@ Router.run(routes, (Root) => {
     document.getElementById('app')
   );
 });
+
+
+
+
+
+
+
+
+
+// store.dispatch({
+//   type: 'SET_STATE',
+//   state: {
+//     vote: {
+//       pair: ['Sunshine', '28 Days Later'],
+//       tally: {Sunshine: 2}
+//     }
+//   }
+// })
+
+
+// store.dispatch({
+//   type: 'SET_STATE',
+//   state: {
+//     winner: 'Trainspotting'
+//   }
+// })
+
 
 
 

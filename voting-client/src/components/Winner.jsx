@@ -1,8 +1,7 @@
 import React from 'react/addons';
-import {connect} from 'react-redux';
 
-export const Winner = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+export default React.createClass({
+  // mixins: [React.addons.PureRenderMixin],
   render: function() {
     return (
       <div className="winner">
@@ -11,11 +10,3 @@ export const Winner = React.createClass({
     );
   }
 });
-
-function mapStateToProps(state) {
-  return {
-    winner: state.get('winner')
-  }
-}
-
-export const WinnerContainer = connect(mapStateToProps)(Winner);

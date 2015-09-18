@@ -7,8 +7,8 @@ export default function startServer(store) {
   );
 
   io.on('connection', (socket) => {
-    console.log(store.getState())
     socket.emit('state', store.getState().toJS());
+    // socket.emit('state', {winner: "Trainspotting"});
     socket.on('action', store.dispatch.bind(store));
   });
 }
