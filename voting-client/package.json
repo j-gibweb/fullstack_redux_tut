@@ -18,7 +18,8 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js 'test/**/*.@(js|jsx)'",
-    "test:watch": "npm run watch --watch"
+    "test:watch": "npm run watch --watch",
+    "test:one_dir": "node ./test/test_runner.js"
   },
   "dependencies": {
     "immutable": "^3.7.5",
